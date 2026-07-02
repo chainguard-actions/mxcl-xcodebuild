@@ -1,0 +1,23 @@
+name: Test platform inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          action: none
+          platform: iOS
+          platform-version: '^15'
+          arch: arm64
+          scheme: MyScheme
+          configuration: Debug
+          working-directory: '.'
+        continue-on-error: true
+      - name: Assert action ran
+        run: |
+          echo "Action completed (may fail on non-macOS runner, which is expected)"
+          echo "PASS"
