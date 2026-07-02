@@ -10,6 +10,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
 | v3.3.0 | [`v3.3.0`](https://github.com/chainguard-actions/mxcl-xcodebuild/tree/v3.3.0) | [`e1b8e29`](https://github.com/mxcl/xcodebuild/commit/e1b8e29b7eefe9381ba0c1024f52c777406bc300) |
+| v3.4.0 | [`v3.4.0`](https://github.com/chainguard-actions/mxcl-xcodebuild/tree/v3.4.0) | [`2cf0ec5`](https://github.com/mxcl/xcodebuild/commit/2cf0ec52b855fa777531c5c89b714caa7a3abd5e) |
 | v3.5.0 | [`v3.5.0`](https://github.com/chainguard-actions/mxcl-xcodebuild/tree/v3.5.0) | [`5c66d0a`](https://github.com/mxcl/xcodebuild/commit/5c66d0aa1072a1b1f6cfc978530bf76b3f13a24d) |
 | v3.5.1 | [`v3.5.1`](https://github.com/chainguard-actions/mxcl-xcodebuild/tree/v3.5.1) | [`e366f14`](https://github.com/mxcl/xcodebuild/commit/e366f14791346edb74397fe9a762ccee86eddc06) |
 | v3.6.0 | [`v3.6.0`](https://github.com/chainguard-actions/mxcl-xcodebuild/tree/v3.6.0) | [`d3ee9b4`](https://github.com/mxcl/xcodebuild/commit/d3ee9b419c1be9a988086c58fe0988f32d99cfc5) |
