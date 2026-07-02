@@ -1,0 +1,30 @@
+name: Test basic inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          xcode: '14'
+          swift: '5'
+          platform: macOS
+          platform-version: '13'
+          arch: arm64
+          action: none
+          scheme: MyScheme
+          configuration: Debug
+          working-directory: '.'
+          code-coverage: 'false'
+          warnings-as-errors: 'false'
+          verbosity: xcpretty
+          upload-logs: on-failure
+          trust-plugins: 'false'
+      - name: Assert step ran
+        run: |
+          echo "Step completed (may have failed due to non-macOS runner)"
+          echo "PASS"

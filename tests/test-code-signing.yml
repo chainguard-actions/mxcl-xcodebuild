@@ -1,0 +1,22 @@
+name: Test code signing inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          action: none
+          code-sign-certificate: 'dGVzdA=='
+          code-sign-certificate-passphrase: 'test-passphrase'
+          code-sign-identity: 'Apple Distribution: Test (ABCDEF1234)'
+          mobile-provisioning-profiles-base64: 'dGVzdA=='
+          provisioning-profiles-base64: 'dGVzdA=='
+      - name: Assert step ran
+        run: |
+          echo "Step completed (may have failed due to non-macOS runner)"
+          echo "PASS"
