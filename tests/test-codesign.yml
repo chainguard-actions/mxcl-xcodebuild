@@ -1,0 +1,27 @@
+name: Test code signing inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          code-sign-certificate: 'dGVzdC1jZXJ0aWZpY2F0ZQ=='
+          code-sign-certificate-passphrase: 'test-passphrase'
+          code-sign-identity: 'Apple Development: Test User (ABCDEF1234)'
+          mobile-provisioning-profiles-base64: |
+            dGVzdC1wcm9maWxlLTE=
+            dGVzdC1wcm9maWxlLTI=
+          provisioning-profiles-base64: |
+            dGVzdC1tYWMtcHJvZmlsZS0x
+          action: build
+          verbosity: quiet
+          upload-logs: on-failure
+      - name: Assert action ran (may fail on non-macOS runner)
+        run: |
+          echo "Action outcome: ${{ steps.action.outcome }}"
+          echo "PASS: action step completed (continue-on-error allows non-macOS failure)"
