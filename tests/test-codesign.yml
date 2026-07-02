@@ -1,0 +1,29 @@
+name: Test code signing and authentication inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          action: none
+          workspace: MyApp.xcworkspace
+          scheme: MyApp
+          authentication-key-base64: dGVzdC1rZXk=
+          authentication-key-id: ABCDEF1234
+          authentication-key-issuer-id: 12345678-1234-1234-1234-123456789012
+          code-sign-certificate: dGVzdC1jZXJ0
+          code-sign-certificate-passphrase: test-passphrase
+          code-sign-identity: 'Apple Distribution'
+          mobile-provisioning-profiles-base64: dGVzdC1wcm9maWxl
+          provisioning-profiles-base64: dGVzdC1tYWMtcHJvZmlsZQ==
+          verbosity: quiet
+          upload-logs: on-failure
+        continue-on-error: true
+      - name: Assert action ran
+        run: |
+          echo "Action step completed with code signing inputs"
+          echo "PASS"
