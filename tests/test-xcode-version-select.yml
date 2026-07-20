@@ -1,0 +1,26 @@
+name: Test Xcode version selection
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with xcode version range and action=none
+        id: action
+        uses: .
+        with:
+          action: none
+          xcode: ^15
+      - name: Assert Xcode version was selected
+        run: |
+          echo "Xcode version after action:"
+          xcodebuild -version
+          XCODE_VER=$(xcodebuild -version | head -1 | awk '{print $2}')
+          echo "Selected Xcode version: $XCODE_VER"
+          MAJOR=$(echo "$XCODE_VER" | cut -d. -f1)
+          if [ "$MAJOR" -lt 15 ]; then
+            echo "FAIL: Expected Xcode >= 15, got $XCODE_VER"
+            exit 1
+          fi
+          echo "PASS: Xcode $XCODE_VER satisfies ^15"
