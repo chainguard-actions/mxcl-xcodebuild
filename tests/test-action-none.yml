@@ -1,0 +1,35 @@
+name: Test action=none (Xcode selection only)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Run action with action=none (skip xcodebuild)
+        id: action
+        uses: .
+        with:
+          action: none
+          verbosity: quiet
+
+      - name: Assert xcode-select path is set
+        run: |
+          XCODE_PATH="$(xcode-select --print-path)"
+          echo "xcode-select path: $XCODE_PATH"
+          if [ -z "$XCODE_PATH" ]; then
+            echo "FAIL: xcode-select path is empty"
+            exit 1
+          fi
+          echo "PASS: xcode-select path is $XCODE_PATH"
+
+      - name: Assert xcodebuild is available
+        run: |
+          XCODE_VERSION="$(xcodebuild -version | head -1)"
+          echo "xcodebuild version: $XCODE_VERSION"
+          if [ -z "$XCODE_VERSION" ]; then
+            echo "FAIL: xcodebuild version is empty"
+            exit 1
+          fi
+          echo "PASS: $XCODE_VERSION"

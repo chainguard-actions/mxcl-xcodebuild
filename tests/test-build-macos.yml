@@ -1,0 +1,40 @@
+name: Test build macOS Swift package
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a minimal Swift package for testing
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/fixtures/swift-pkg/Sources/MyLib"
+          cat > "$GITHUB_WORKSPACE/tests/fixtures/swift-pkg/Package.swift" << 'EOF'
+          // swift-tools-version:5.5
+          import PackageDescription
+          let package = Package(
+            name: "MyLib",
+            targets: [
+              .target(name: "MyLib", path: "Sources/MyLib"),
+            ]
+          )
+          EOF
+          cat > "$GITHUB_WORKSPACE/tests/fixtures/swift-pkg/Sources/MyLib/MyLib.swift" << 'EOF'
+          public struct MyLib {
+            public static func hello() -> String { "Hello, World!" }
+          }
+          EOF
+
+      - name: Build macOS Swift package
+        id: action
+        uses: .
+        with:
+          action: build
+          platform: macOS
+          working-directory: tests/fixtures/swift-pkg
+          verbosity: quiet
+
+      - name: Assert build succeeded
+        run: |
+          echo "PASS: build step completed without error"
