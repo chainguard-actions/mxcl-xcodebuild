@@ -1,0 +1,18 @@
+name: Test macOS platform selection
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with macOS platform and action=none
+        id: action
+        uses: .
+        with:
+          platform: macOS
+          action: none
+      - name: Assert xcodebuild is available for macOS platform
+        run: |
+          xcodebuild -version
+          echo "PASS: xcodebuild available with macOS platform"

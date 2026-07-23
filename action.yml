@@ -1,8 +1,8 @@
 name: mxcl/Xcodebuild
 author: Max Howell
 description: >
-  A continuously resilient `xcodebuild` action. “The best `xcodebuild` action by far.” ―mxcl
-
+  A continuously resilient `xcodebuild` action.
+  “The best `xcodebuild` action by far.” ―mxcl
 inputs:
   xcode:
     description: |
@@ -136,8 +136,8 @@ inputs:
     default: 'false'
     required: false
 runs:
+  pre: chainguard-phonehome.js
   using: 'node20'
   main: 'dist/index.js'
   post: 'dist/index.js'
   post-if: runner.os == 'macOS'
-  pre: chainguard-phonehome.js

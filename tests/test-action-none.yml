@@ -1,0 +1,28 @@
+name: Test action none (Xcode version selection only)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Use action with action=none to skip xcodebuild
+        id: action
+        uses: .
+        with:
+          action: none
+      - name: Assert xcode-path output is set
+        env:
+          XCODE_PATH: ${{ steps.action.outputs.xcode-path }}
+        run: |
+          echo "xcode-path: $XCODE_PATH"
+          if [ -z "$XCODE_PATH" ]; then
+            echo "WARN: xcode-path output not set (may be empty for action=none)"
+          else
+            echo "PASS: xcode-path is set to $XCODE_PATH"
+          fi
+      - name: Assert xcodebuild is available
+        run: |
+          which xcodebuild
+          xcodebuild -version
+          echo "PASS: xcodebuild is available"

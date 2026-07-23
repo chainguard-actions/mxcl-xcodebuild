@@ -1,0 +1,22 @@
+name: Test swift version input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          swift: '^5'
+          action: none
+          platform: macOS
+          platform-version: '^12'
+          arch: x86_64
+          scheme: MyScheme
+          working-directory: '.'
+          workspace: MyApp.xcworkspace
+      - name: Assert action completed
+        run: |
+          echo "PASS: action ran with swift, platform-version, arch, scheme, working-directory, workspace inputs"
