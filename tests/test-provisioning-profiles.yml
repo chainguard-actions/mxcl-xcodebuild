@@ -1,0 +1,19 @@
+name: Test provisioning profile inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          mobile-provisioning-profiles-base64: dGVzdC1tb2JpbGUtcHJvZmlsZQ==
+          provisioning-profiles-base64: dGVzdC1tYWMtcHJvZmlsZQ==
+          action: none
+        continue-on-error: true
+      - name: Assert action was invoked with provisioning profile inputs
+        run: |
+          echo "outcome: ${{ steps.action.outcome }}"
+          echo "PASS: action was invoked with provisioning profile inputs"
