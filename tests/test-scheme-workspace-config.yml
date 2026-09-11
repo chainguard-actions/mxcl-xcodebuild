@@ -1,4 +1,4 @@
-name: Test provisioning profile inputs
+name: Test scheme, workspace, and configuration inputs
 on:
   workflow_dispatch:
 jobs:
@@ -10,10 +10,9 @@ jobs:
         uses: .
         continue-on-error: true
         with:
-          mobile-provisioning-profiles-base64: |
-            dGVzdC1tb2JpbGUtcHJvZmlsZQ==
-          provisioning-profiles-base64: |
-            dGVzdC1tYWMtcHJvZmlsZQ==
+          scheme: MyScheme
+          workspace: MyApp.xcworkspace
+          configuration: Release
           action: none
       - name: Assert action ran (succeeds or fails gracefully on non-macOS)
         env:
