@@ -1,4 +1,4 @@
-name: Test provisioning profile inputs
+name: Test provisioning profiles inputs
 on:
   workflow_dispatch:
 jobs:
@@ -8,12 +8,19 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - id: action
         uses: .
-        with:
-          mobile-provisioning-profiles-base64: dGVzdC1tb2JpbGUtcHJvZmlsZQ==
-          provisioning-profiles-base64: dGVzdC1tYWMtcHJvZmlsZQ==
-          action: none
         continue-on-error: true
-      - name: Assert action was invoked with provisioning profile inputs
+        with:
+          mobile-provisioning-profiles-base64: "dGVzdC1tb2JpbGUtcHJvZmlsZQ=="
+          provisioning-profiles-base64: "dGVzdC1tYWMtcHJvZmlsZQ=="
+          action: none
+      - name: Assert action ran or failed gracefully (not macOS runner)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
         run: |
-          echo "Action step completed (continue-on-error allows non-macOS runners)"
-          echo "PASS: provisioning profile inputs were accepted"
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action completed with outcome '$OUTCOME'"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

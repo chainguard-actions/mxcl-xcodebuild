@@ -1,4 +1,4 @@
-name: Test code signing inputs
+name: Test scheme, workspace, working-directory, and configuration inputs
 on:
   workflow_dispatch:
 jobs:
@@ -10,9 +10,10 @@ jobs:
         uses: .
         continue-on-error: true
         with:
-          code-sign-certificate: "dGVzdC1jZXJ0aWZpY2F0ZQ=="
-          code-sign-certificate-passphrase: "test-passphrase"
-          code-sign-identity: "Apple Development: Test User"
+          scheme: MyScheme
+          workspace: MyApp.xcworkspace
+          working-directory: "."
+          configuration: Debug
           action: none
       - name: Assert action ran or failed gracefully (not macOS runner)
         env:
