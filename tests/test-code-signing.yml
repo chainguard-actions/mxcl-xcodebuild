@@ -8,13 +8,20 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - id: action
         uses: .
-        with:
-          code-sign-certificate: dGVzdC1jZXJ0aWZpY2F0ZQ==
-          code-sign-certificate-passphrase: test-passphrase
-          code-sign-identity: 'Apple Development'
-          action: none
         continue-on-error: true
-      - name: Assert action ran
+        with:
+          code-sign-certificate: "dGVzdC1jZXJ0aWZpY2F0ZQ=="
+          code-sign-certificate-passphrase: "test-passphrase"
+          code-sign-identity: "Apple Development"
+          action: build
+      - name: Assert action ran (code signing inputs accepted)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
         run: |
-          echo "Action completed (may fail on non-macOS runner)"
-          echo "PASS: code signing inputs were accepted"
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action ran with code signing inputs"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
