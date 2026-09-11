@@ -1,4 +1,4 @@
-name: Test code signing inputs
+name: Test scheme, workspace, and working-directory inputs
 on:
   workflow_dispatch:
 jobs:
@@ -11,18 +11,16 @@ jobs:
         continue-on-error: true
         with:
           action: none
-          code-sign-certificate: dGVzdC1jZXJ0aWZpY2F0ZQ==
-          code-sign-certificate-passphrase: test-passphrase
-          code-sign-identity: Apple Development
-          mobile-provisioning-profiles-base64: dGVzdC1tb2JpbGUtcHJvZmlsZQ==
-          provisioning-profiles-base64: dGVzdC1tYWMtcHJvZmlsZQ==
-      - name: Assert action ran with code signing inputs
+          scheme: MyScheme
+          workspace: MyApp.xcworkspace
+          working-directory: .
+      - name: Assert action ran with scheme, workspace, and working-directory inputs
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
           if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
-            echo "PASS: action accepted code signing inputs"
+            echo "PASS: action accepted scheme, workspace, and working-directory inputs"
           else
             echo "FAIL: unexpected outcome '$OUTCOME'"
             exit 1
