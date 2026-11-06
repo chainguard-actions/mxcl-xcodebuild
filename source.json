@@ -4,8 +4,13 @@
   "version": "v3.5.0",
   "commit_sha": "5c66d0aa1072a1b1f6cfc978530bf76b3f13a24d",
   "url": "https://github.com/mxcl/xcodebuild",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/mxcl/xcodebuild/v3.5.0/sha256-6572fad7d8d5b75879ab2d532f4ac10a6511901755d84516e2d5cd2731b6b59f.tar.gz",
+    "sha256": "6572fad7d8d5b75879ab2d532f4ac10a6511901755d84516e2d5cd2731b6b59f",
+    "size_bytes": 1574665
+  }
 }
